@@ -15,6 +15,11 @@
 # https://hub.docker.com/r/frolvlad/alpine-glibc/tags/
 
 FROM frolvlad/alpine-glibc:alpine-3.8_glibc-2.28
+MAINTAINER Marcos Rafael Kaissi Barbosa <mrkaissi@gmail.com>
+ARG VERSION
+ARG CREATION_DATE
+LABEL version="${VERSION}" \
+	  creationDate="${CREATION_DATE}"
 ENV ORACLE_HOME /usr/lib/oracle/11.2/client64
 ENV LD_LIBRARY_PATH ${ORACLE_HOME}/lib
 ARG TZ="Etc/UTC"
@@ -22,7 +27,7 @@ ENV TZ ${TZ}
 COPY bin/instantclient-linux.x64-11.2.0.4.0.zip ${ORACLE_HOME}/instantclient_11_2.zip
 COPY entrypoint /usr/local/sqlplus/
 COPY sqlplus /usr/local/sqlplus/scripts.d/sqlplus
-RUN apk --no-cache add --update -U \
+RUN apk add --no-cache --update -U \
         curl \
         dumb-init \
         libaio \
